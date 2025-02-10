@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffebf0;
+            padding: 50px;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            color: #e63946;
+        }
+        .panda-gif {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px 0;
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            position: absolute;
+        }
+        .yes {
+            background-color: #ff477e;
+            color: white;
+        }
+        .no {
+            background-color: #ffcccc;
+            color: black;
+            transition: transform 0.2s ease-in-out;
+        }
+        .flower-rain {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            from { transform: translateY(-100px); }
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="question">Will you be my Valentine? 💖</h1>
+        <img class="panda-gif" src="https://media.giphy.com/media/ZBQhoZC0nqknSviPqT/giphy.gif" alt="Cute Panda Proposal">
+        <div class="buttons">
+            <button class="yes" onclick="acceptLove()">Yes ❤️</button>
+            <button class="no" id="noButton" onclick="changeText()">No 💔</button>
+        </div>
+    </div>
+
+    <script>
+        let responses = [
+            "Please? 🥺",
+            "Do you want to hurt me? 😭",
+            "Are you sure? 💔",
+            "I hate you 😭",
+            "You're breaking my heart 💔",
+            "I'm crying now 😭😭",
+            "Okay, last chance... PLEASE? 🥺",
+            "Fine... I give up 😞",
+            "WAIT WAIT WAIT!! You’re my only choice! 😭",
+            "But why? 🥺",
+            "You’re so cruel 😢",
+            "Think again? 💕",
+            "Please, just say yes! 🥰",
+            "What if I cry? 😭",
+            "I can’t live without you 💔",
+            "You're the love of my life! 💖",
+            "What will it take to make you say yes? 😩",
+            "I'll buy you chocolates 🍫",
+            "How about a romantic date? 🍽️",
+            "I'm down on one knee! 💍",
+            "Say yes or I’ll keep asking forever! 😜",
+            "Don’t do this to me! 😭",
+            "I promise to make you happy! 💖",
+            "You have my heart! 💓",
+            "One last chance? 🥺",
+            "I’ll never stop loving you! 💕",
+            "Are you really going to break my heart? 💔",
+            "I’ll be heartbroken forever! 😭",
+            "My heart beats for you! ❤️",
+            "Please, don’t make me beg any longer! 😭"
+        ];
+        let index = 0;
+        let angle = 0;
+        let radius = 100;
+        let noButton = document.getElementById("noButton");
+
+        function changeText() {
+            document.getElementById("question").innerText = responses[index % responses.length];
+            index++;
+            moveNoButton();
+        }
+
+        function moveNoButton() {
+            let yesButton = document.querySelector(".yes");
+            let rect = yesButton.getBoundingClientRect();
+            let centerX = rect.left + rect.width / 2;
+            let centerY = rect.top + rect.height / 2;
+            
+            angle += 30;
+            let x = centerX + radius * Math.cos(angle * Math.PI / 180) - rect.width / 2;
+            let y = centerY + radius * Math.sin(angle * Math.PI / 180) - rect.height / 2;
+            
+            noButton.style.transform = `translate(${x - rect.left}px, ${y - rect.top}px)`;
+        }
+
+        function acceptLove() {
+            document.getElementById("question").innerText = "YAYYY! 🥰💖 I love you!";
+            document.querySelector(".buttons").style.display = "none";
+            showKissAnimation();
+            startFlowerRain();
+        }
+
+        function showKissAnimation() {
+            let kissGif = document.createElement("img");
+            kissGif.src = "https://media.giphy.com/media/l0HlNaQ6gWfllcjDO/giphy.gif";
+            kissGif.alt = "Kissing Animation";
+            kissGif.style.width = "100%";
+            kissGif.style.maxWidth = "300px";
+            kissGif.style.marginTop = "20px";
+            document.querySelector(".container").appendChild(kissGif);
+        }
+
+        function startFlowerRain() {
+            for (let i = 0; i < 30; i++) {
+                let flower = document.createElement("img");
+                flower.src = "https://www.pngall.com/wp-content/uploads/5/Flower-PNG-Free-Download.png";
+                flower.className = "flower-rain";
+                flower.style.left = `${Math.random() * window.innerWidth}px`;
+                flower.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                document.body.appendChild(flower);
+            }
+        }
+    </script>
+</body>
+</html>
